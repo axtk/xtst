@@ -1,0 +1,25 @@
+{
+  "name": "@t8/store",
+  "version": "1.5.0",
+  "description": "A lightweight data container allowing for subscription to its updates",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "preversion": "npx npm-run-all shape test",
+    "shape": "npx codeshape",
+    "test": "node tests.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t8js/store.git"
+  },
+  "keywords": [
+    "store",
+    "data container",
+    "shared state"
+  ],
+  "author": "axtk",
+  "license": "MIT"
+}
