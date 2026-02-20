@@ -1,7 +1,7 @@
 {
-  "name": "@t8/store",
-  "version": "1.5.0",
-  "description": "A lightweight data container allowing for subscription to its updates",
+  "name": "@axcraft/state",
+  "version": "0.1.0",
+  "description": "Data container allowing for subscription to its updates",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -13,12 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/t8js/store.git"
+    "url": "git+https://github.com/axcraft/state.git"
   },
   "keywords": [
-    "store",
+    "state",
     "data container",
-    "shared state"
+    "shared state",
+    "state management"
   ],
   "author": "axtk",
   "license": "MIT"
