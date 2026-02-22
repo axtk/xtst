@@ -19,11 +19,11 @@ let state = new State(10);
 
 let testValue = [100, -3];
 let unsubscribe = [
-  state.on("update", ({ current = 0 }) => {
-    testValue[0] += current;
+  state.on("update", () => {
+    testValue[0] += state.getValue();
   }),
-  state.on("update", ({ current = 1 }) => {
-    testValue[1] *= current;
+  state.on("update", () => {
+    testValue[1] *= state.getValue();
   }),
 ];
 
