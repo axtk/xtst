@@ -1,5 +1,5 @@
 export type StateUpdate<T> = (value: T) => T;
-export type StateUpdateCallback<T> = (state: State<T>) => boolean | undefined | void;
+export type StateUpdateCallback = () => boolean | undefined | void;
 
 /**
  * Data container allowing for subscription to its updates.
@@ -8,7 +8,7 @@ export class State<T> {
   current: T;
   previous: T;
 
-  callbacks: Record<string, Set<StateUpdateCallback<T>>> = {};
+  callbacks: Record<string, Set<StateUpdateCallback>> = {};
   revision = -1;
   active = false;
 
@@ -38,8 +38,8 @@ export class State<T> {
    * `callback` is removed from the state and no longer called when
    * the state emits the corresponding event.
    */
-  on(event: string, callback: StateUpdateCallback<T>) {
-    (this.callbacks[event] ??= new Set<StateUpdateCallback<T>>()).add(callback);
+  on(event: string, callback: StateUpdateCallback) {
+    (this.callbacks[event] ??= new Set<StateUpdateCallback>()).add(callback);
 
     return () => this.off(event, callback);
   }
@@ -47,10 +47,10 @@ export class State<T> {
    * Adds a one-time event handler to the state: once the event is emitted,
    * the callback is called and removed from the state.
    */
-  once(event: string, callback: StateUpdateCallback<T>) {
-    let oneTimeCallback: StateUpdateCallback<T> = (state) => {
+  once(event: string, callback: StateUpdateCallback) {
+    let oneTimeCallback: StateUpdateCallback = () => {
       this.off(event, oneTimeCallback);
-      callback(state);
+      callback();
     };
 
     return this.on(event, oneTimeCallback);
@@ -60,7 +60,7 @@ export class State<T> {
    * and removes all handlers of the given event if `callback` is not
    * specified.
    */
-  off(event: string, callback?: StateUpdateCallback<T>) {
+  off(event: string, callback?: StateUpdateCallback) {
     if (callback === undefined) delete this.callbacks[event];
     else this.callbacks[event]?.delete(callback);
   }
@@ -74,7 +74,7 @@ export class State<T> {
 
     if (this.active && callbacks?.size) {
       for (let callback of callbacks) {
-        if (callback(this) === false) return false;
+        if (callback() === false) return false;
       }
     }
 
