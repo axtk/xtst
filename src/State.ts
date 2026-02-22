@@ -5,28 +5,13 @@ export type StateEventCallback = () => boolean | undefined | void;
  * Data container allowing for subscription to its updates.
  */
 export class State<T> {
-  current: T;
-  previous: T;
-
-  callbacks: Record<string, Set<StateEventCallback>> = {};
-  revision = -1;
-  active = false;
+  _value: T;
+  _callbacks: Record<string, Set<StateEventCallback>> = {};
+  _revision = -1;
+  _active = true;
 
   constructor(value: T) {
-    this.current = value;
-    this.previous = value;
-    this.init();
-  }
-  init() {
-    this.start();
-  }
-  start() {
-    this.active = true;
-    this.emit("start");
-  }
-  stop() {
-    this.active = false;
-    this.emit("stop");
+    this._value = value;
   }
   /**
    * Adds an event handler to the state.
@@ -39,7 +24,7 @@ export class State<T> {
    * the state emits the corresponding event.
    */
   on(event: string, callback: StateEventCallback) {
-    (this.callbacks[event] ??= new Set<StateEventCallback>()).add(callback);
+    (this._callbacks[event] ??= new Set<StateEventCallback>()).add(callback);
 
     return () => this.off(event, callback);
   }
@@ -61,8 +46,8 @@ export class State<T> {
    * specified.
    */
   off(event: string, callback?: StateEventCallback) {
-    if (callback === undefined) delete this.callbacks[event];
-    else this.callbacks[event]?.delete(callback);
+    if (callback === undefined) delete this._callbacks[event];
+    else this._callbacks[event]?.delete(callback);
   }
   /**
    * Emits the specified event. Returns `false` if at least one event callback
@@ -70,9 +55,9 @@ export class State<T> {
    * Otherwise returns `true`.
    */
   emit(event: string) {
-    let callbacks = this.callbacks[event];
+    let callbacks = this._callbacks[event];
 
-    if (this.active && callbacks?.size) {
+    if (this._active && callbacks?.size) {
       for (let callback of callbacks) {
         if (callback() === false) return false;
       }
@@ -81,24 +66,30 @@ export class State<T> {
     return true;
   }
   /**
-   * Returns the current state value.
-   */
-  getValue(): T {
-    return this.current;
-  }
-  /**
    * Updates the state value.
    *
    * @param update - A new value or an update function `(value) => nextValue`
    * that returns a new state value based on the current state value.
    */
   setValue(update: T | StateUpdate<T>): void {
-    if (!this.active || !this.emit("updatestart")) return;
+    if (!this._active || !this.emit("updatestart")) return;
 
-    this.previous = this.current;
-    this.current = update instanceof Function ? update(this.current) : update;
-    this.revision = Math.random();
+    this._value = update instanceof Function ? update(this._value) : update;
+    this._revision = Math.random();
 
     this.emit("update");
+  }
+  get value(): T {
+    return this._value;
+  }
+  get revision() {
+    return this._revision;
+  }
+  get active() {
+    return this._active;
+  }
+  set active(value: boolean) {
+    this._active = value;
+    this.emit(value ? "active" : "inactive");
   }
 }

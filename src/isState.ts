@@ -10,8 +10,8 @@ export function isState<T>(x: unknown): x is State<T> {
     typeof x === "object" &&
     "on" in x &&
     typeof x.on === "function" &&
-    "getValue" in x &&
-    typeof x.getValue === "function" &&
+    "emit" in x &&
+    typeof x.emit === "function" &&
     "setValue" in x &&
     typeof x.setValue === "function"
   );
