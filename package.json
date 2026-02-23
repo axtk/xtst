@@ -9,7 +9,8 @@
   "scripts": {
     "preversion": "npx npm-run-all shape test",
     "shape": "npx codeshape",
-    "test": "node tests.ts"
+    "test": "node tests.ts",
+    "typecheck": "npx codeshape --typecheck-only"
   },
   "repository": {
     "type": "git",

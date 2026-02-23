@@ -21,8 +21,8 @@ export class Route extends PortableState<string, NavigationOptions> {
         window.removeEventListener("popstate", handleURLChange);
       };
 
-      this.on("active", start);
-      this.on("inactive", stop);
+      this.on("start", start);
+      this.on("stop", stop);
 
       start();
     }

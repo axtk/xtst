@@ -100,8 +100,16 @@ export class PortableState<Value, Payload extends StateEventPayload = StateEvent
   get active() {
     return this._active;
   }
-  set active(value: boolean) {
-    this._active = value;
-    this.emit(value ? "active" : "inactive");
+  start() {
+    if (!this._active) {
+      this._active = true;
+      this.emit("start");
+    }
+  }
+  stop() {
+    if (this._active) {
+      this._active = false;
+      this.emit("stop");
+    }
   }
 }

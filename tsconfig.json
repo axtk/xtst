@@ -8,6 +8,7 @@
     "outDir": "dist",
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
     "strict": true,
     "noUnusedLocals": true,
