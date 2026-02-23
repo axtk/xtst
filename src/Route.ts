@@ -41,7 +41,7 @@ export class Route extends PortableState<string, NavigationOptions> {
     if (this.emit("navigationstart", navigationOptions)) {
       this._assignValue(href);
       this._transition(navigationOptions);
-      this.emit("navigation", navigationOptions);
+      this.emit("update", navigationOptions);
 
       if (this.emit("navigationend", navigationOptions))
         this._complete(navigationOptions);

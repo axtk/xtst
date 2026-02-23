@@ -1,4 +1,5 @@
-export type StateEventPayload = Record<string, unknown>;
+import { StateEventPayload } from "./types/StateEventPayload.ts";
+
 export type StateEventCallback<T extends StateEventPayload> = (event: T | undefined) => boolean | undefined | void;
 export type StateUpdate<T> = (value: T) => T;
 
