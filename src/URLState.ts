@@ -4,7 +4,7 @@ import { NavigationOptions } from "./types/NavigationOptions.ts";
 
 const defaultNavigationOptions: NavigationOptions = {};
 
-export class Route extends PortableState<string, NavigationOptions> {
+export class URLState extends PortableState<string, NavigationOptions> {
   constructor(href = "") {
     super(href);
 

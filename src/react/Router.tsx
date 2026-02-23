@@ -1,9 +1,9 @@
 import { type ReactNode, useEffect, useMemo } from "react";
-import { RouteContext } from "./RouteContext.ts";
-import { Route } from "../Route.ts";
+import { URLContext } from "./URLContext.ts";
+import { URLState } from "../URLState.ts";
 
 export type RouterProps = {
-  href?: string | Route | undefined;
+  href?: string | URLState | undefined;
   children?: ReactNode;
 };
 
@@ -11,20 +11,20 @@ export type RouterProps = {
  * A component providing a URL value to the nested components.
  */
 export const Router = ({ href, children }: RouterProps) => {
-  let route = useMemo(() => {
-    if (href instanceof Route) return href;
+  let urlState = useMemo(() => {
+    if (href instanceof URLState) return href;
     else if (href === undefined || typeof href === "string")
-      return new Route(href);
+      return new URLState(href);
     else throw new Error("Router's 'href' of unsupported type");
   }, [href]);
 
   useEffect(() => {
-    route.start();
+    urlState.start();
 
-    return () => route.stop();
-  }, [route]);
+    return () => urlState.stop();
+  }, [urlState]);
 
   return (
-    <RouteContext.Provider value={route}>{children}</RouteContext.Provider>
+    <URLContext.Provider value={urlState}>{children}</URLContext.Provider>
   );
 };
