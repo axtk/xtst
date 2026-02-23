@@ -4,14 +4,14 @@ import { isPortableState } from "../isPortableState.ts";
 import { EventPayload } from "../types/EventPayload.ts";
 import { RenderCallback } from "../types/RenderCallback.ts";
 
-export type SetPortableStateValue<T> = PortableState<T>["setValue"];
+export type SetPortableStateValue<T, P extends EventPayload> = PortableState<T, P>["setValue"];
 
 const defaultRenderCallback = (render: () => void) => render();
 
-export function usePortableState<T, P extends EventPayload>(
+export function usePortableState<T, P extends EventPayload = EventPayload>(
   state: PortableState<T, P>,
   callback: RenderCallback<P> = defaultRenderCallback,
-): [T, SetPortableStateValue<T>] {
+): [T, SetPortableStateValue<T, P>] {
   if (!isPortableState<T>(state))
     throw new Error("'state' is not an instance of PortableState");
 
