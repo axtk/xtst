@@ -1,4 +1,4 @@
-import { isState, State } from "./index.ts";
+import { isState, State } from "../index.ts";
 
 let testIndex = 0;
 

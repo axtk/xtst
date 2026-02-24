@@ -1,5 +1,5 @@
 {
-  "include": ["./index.ts", "./tests.ts", "./src"],
+  "include": ["./index.ts", "./playwright.config.ts", "./tests", "./src"],
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,

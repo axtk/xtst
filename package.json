@@ -7,9 +7,11 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "preversion": "npx npm-run-all shape test",
+    "demo": "npx auxsrv tests/routing --spa -b --watch",
+    "preversion": "npx npm-run-all shape test1 test2",
     "shape": "npx codeshape",
-    "test": "node tests.ts"
+    "test1": "node tests/index.ts",
+    "test2": "npx playwright test --project=chromium"
   },
   "repository": {
     "type": "git",
@@ -25,5 +27,10 @@
   "license": "MIT",
   "dependencies": {
     "quasiurl": "^1.1.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.0",
+    "auxsrv": "^0.2.3"
   }
 }
