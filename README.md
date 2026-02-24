@@ -1,14 +1,8 @@
 # external-state
 
-A lightweight data container allowing for subscription to its updates
+A lightweight data container allowing for subscription to its updates, e.g. to be shared by multiple independent parts of code
 
-<!-- docsgen-show-start --
-## `ExternalState`
--- docsgen-show-end -->
-
-An instance of the `ExternalState` class exported from this package is a thin container for data of arbitrary type, exposing methods to get and set the contained value and allowing to subscribe to its value updates. It can be used as external state shared by multiple independent parts of code that need to be notified when the data gets updated.
-
-Instances of `ExternalState` can be used as state shared across application components with libraries like React. See [`@axcraft/react-external-state`](https://github.com/axcraft/react-external-state) exposing a ready-to-use hook for shared state management.
+Such containers can be used as state shared across application components with libraries like React. See [`@axcraft/react-external-state`](https://github.com/axcraft/react-external-state) exposing a ready-to-use hook for shared state management.
 
 ## Initialization
 
