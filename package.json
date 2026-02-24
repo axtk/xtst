@@ -1,5 +1,5 @@
 {
-  "name": "xtst",
+  "name": "sidestate",
   "version": "0.1.0",
   "description": "External state",
   "main": "./dist/index.cjs",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/axtk/xtst.git"
+    "url": "git+https://github.com/axtk/sidestate.git"
   },
   "keywords": [
     "state",
