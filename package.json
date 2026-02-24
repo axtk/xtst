@@ -1,7 +1,7 @@
 {
-  "name": "@axcraft/external-state",
+  "name": "xtst",
   "version": "0.1.0",
-  "description": "Data container allowing for subscription to its updates",
+  "description": "External state",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/axcraft/external-state.git"
+    "url": "git+https://github.com/axtk/xtst.git"
   },
   "keywords": [
     "state",
