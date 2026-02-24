@@ -86,7 +86,7 @@ export class PortableState<Value, Payload extends EventPayload = EventPayload> {
   setValue(update: Value | StateUpdate<Value>, payload?: Payload): void {
     if (this._active && this.emit("updatestart", payload)) {
       this._assignValue(this._resolveValue(update));
-      this.emit("update", payload);
+      if (this.emit("update", payload)) this.emit("updateend", payload);
     }
   }
   get current(): Value {

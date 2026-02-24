@@ -35,7 +35,7 @@ export class URLState extends PortableState<string, NavigationOptions> {
     let navigationOptions = {
       ...payload,
       href,
-      referrer: this.previous,
+      referrer: this.current,
     };
 
     if (this.emit("updatestart", navigationOptions)) {
@@ -44,6 +44,7 @@ export class URLState extends PortableState<string, NavigationOptions> {
       if (this.emit("update", navigationOptions)) {
         this._transition(navigationOptions);
         this._complete(navigationOptions);
+        this.emit("updateend", navigationOptions);
       }
     }
   }

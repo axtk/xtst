@@ -7,7 +7,7 @@ import { Route } from "../Route.ts";
 
 export function useRoute(callback?: RenderCallback<NavigationOptions>) {
   let urlState = useContext(URLContext);
-  
+
   usePortableState(urlState, callback);
 
   return useMemo(() => new Route(urlState), [urlState]);
