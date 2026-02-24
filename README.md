@@ -1,4 +1,4 @@
-# external-state
+# @axcraft / External State
 
 A lightweight data container allowing for subscription to its updates, e.g. to be shared by multiple independent parts of code
 
