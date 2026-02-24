@@ -5,18 +5,12 @@ export type EventCallbackMap<Map extends Record<string, unknown>> = Partial<{
   [K in keyof Map]: Set<EventCallback<Map[K]>>;
 }>;
 
-export type EventPayloadMapShape<T extends Record<string, unknown>> = Record<
-  string,
-  void
-> &
-  T;
-
-export type EventPayloadMap<T> = EventPayloadMapShape<{
+export type EventPayloadMap<T> = Record<string, void> & {
   update: {
     previous: T;
     current: T;
   };
-}>;
+};
 
 /**
  * Data container allowing for subscription to its updates.
@@ -94,11 +88,15 @@ export class State<
    * @param update - A new value or an update function `(value) => nextValue`
    * that returns a new state value based on the current state value.
    */
-  setValue(update: T | StateUpdate<T>): void {
-    if (!this._active) return;
-
+  setValue(update: T | StateUpdate<T>) {
+    if (this._active) this._assignValue(this._resolveValue(update));
+  }
+  _resolveValue(update: T | StateUpdate<T>) {
+    return update instanceof Function ? update(this._value) : update;
+  }
+  _assignValue(value: T) {
     let previous = this._value;
-    let current = update instanceof Function ? update(this._value) : update;
+    let current = value;
 
     this._value = current;
     this._revision = Math.random();

@@ -22,5 +22,8 @@
     "state management"
   ],
   "author": "axtk",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "quasiurl": "^1.1.12"
+  }
 }
