@@ -1,4 +1,4 @@
-import { isExternalState, ExternalState } from "./index.ts";
+import { ExternalState, isExternalState } from "./index.ts";
 
 let testIndex = 0;
 

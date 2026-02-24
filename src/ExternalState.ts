@@ -5,7 +5,11 @@ export type EventCallbackMap<Map extends Record<string, unknown>> = Partial<{
   [K in keyof Map]: Set<EventCallback<Map[K]>>;
 }>;
 
-export type EventPayloadMapShape<T extends Record<string, unknown>> = Record<string, void> & T;
+export type EventPayloadMapShape<T extends Record<string, unknown>> = Record<
+  string,
+  void
+> &
+  T;
 
 export type EventPayloadMap<T> = EventPayloadMapShape<{
   update: {
@@ -17,7 +21,10 @@ export type EventPayloadMap<T> = EventPayloadMapShape<{
 /**
  * Data container allowing for subscription to its updates.
  */
-export class ExternalState<T, P extends EventPayloadMap<T> = EventPayloadMap<T>> {
+export class ExternalState<
+  T,
+  P extends EventPayloadMap<T> = EventPayloadMap<T>,
+> {
   _value: T;
   _callbacks: EventCallbackMap<P> = {};
   _revision = -1;
