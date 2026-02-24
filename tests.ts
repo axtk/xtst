@@ -19,11 +19,11 @@ let state = new ExternalState(10);
 
 let testValue = [100, -3];
 let unsubscribe = [
-  state.on("update", () => {
-    testValue[0] += state.getValue();
+  state.on("update", ({ current }) => {
+    testValue[0] += current;
   }),
-  state.on("update", () => {
-    testValue[1] *= state.getValue();
+  state.on("update", ({ current }) => {
+    testValue[1] *= current;
   }),
 ];
 
@@ -31,7 +31,7 @@ assert(isExternalState(state), true);
 assert(isExternalState({}), false);
 
 assert(state.getValue(), 10);
-assert(state._callbacks.update.size, 2);
+assert(state._callbacks.update?.size, 2);
 assert(testValue[0], 100);
 assert(testValue[1], -3);
 
@@ -46,7 +46,7 @@ assert(testValue[0], 77);
 assert(testValue[1], 150);
 
 unsubscribe[1]();
-assert(state._callbacks.update.size, 1);
+assert(state._callbacks.update?.size, 1);
 
 state.setValue(12);
 assert(state.getValue(), 12);
