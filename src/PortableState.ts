@@ -1,5 +1,5 @@
-import { EventCallback } from "./types/EventCallback.ts";
-import { EventPayload } from "./types/EventPayload.ts";
+import type { EventCallback } from "./types/EventCallback.ts";
+import type { EventPayload } from "./types/EventPayload.ts";
 
 export type StateUpdate<T> = (value: T) => T;
 
@@ -31,7 +31,9 @@ export class PortableState<Value, Payload extends EventPayload = EventPayload> {
   on(event: string, callback: EventCallback<Payload>) {
     let effectiveEvent = this.eventAliases[event] ?? event;
 
-    (this._callbacks[effectiveEvent] ??= new Set<EventCallback<Payload>>()).add(callback);
+    (this._callbacks[effectiveEvent] ??= new Set<EventCallback<Payload>>()).add(
+      callback,
+    );
 
     return () => this.off(event, callback);
   }

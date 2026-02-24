@@ -3,13 +3,16 @@ import {
   type StorageEntryOptions,
 } from "./getStorageEntry.ts";
 import { PortableState } from "./PortableState.ts";
-import { EventPayload } from "./types/EventPayload.ts";
-import { PersistentStorage } from "./types/PersistentStorage.ts";
+import type { EventPayload } from "./types/EventPayload.ts";
+import type { PersistentStorage } from "./types/PersistentStorage.ts";
 
 /**
  * A container for data persistent across page reloads.
  */
-export class PersistentState<T, P extends EventPayload = EventPayload> extends PortableState<T, P> {
+export class PersistentState<
+  T,
+  P extends EventPayload = EventPayload,
+> extends PortableState<T, P> {
   _synced = false;
   /**
    * @param value - Initial state value.

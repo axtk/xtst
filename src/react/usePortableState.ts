@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { PortableState } from "../PortableState.ts";
 import { isPortableState } from "../isPortableState.ts";
-import { EventPayload } from "../types/EventPayload.ts";
-import { RenderCallback } from "../types/RenderCallback.ts";
+import type { PortableState } from "../PortableState.ts";
+import type { EventPayload } from "../types/EventPayload.ts";
+import type { RenderCallback } from "../types/RenderCallback.ts";
 
-export type SetPortableStateValue<T, P extends EventPayload> = PortableState<T, P>["setValue"];
+export type SetPortableStateValue<T, P extends EventPayload> = PortableState<
+  T,
+  P
+>["setValue"];
 
 const defaultRenderCallback = (render: () => void) => render();
 
@@ -32,7 +35,9 @@ export function usePortableState<T, P extends EventPayload = EventPayload>(
       if (shouldUpdate.current) setRevision(Math.random());
     };
 
-    let unsubscribe = state.on("update", (payload) => callback(render, payload));
+    let unsubscribe = state.on("update", (payload) =>
+      callback(render, payload),
+    );
 
     if (state.revision !== initialStateRevision.current)
       setRevision(Math.random());

@@ -1,5 +1,5 @@
 import { QuasiURL } from "quasiurl";
-import { NavigationOptions } from "./types/NavigationOptions.ts";
+import type { NavigationOptions } from "./types/NavigationOptions.ts";
 import { URLState } from "./URLState.ts";
 
 export class Route {

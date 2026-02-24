@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo } from "react";
-import { URLContext } from "./URLContext.ts";
 import { URLState } from "../URLState.ts";
+import { URLContext } from "./URLContext.ts";
 
 export type URLProviderProps = {
   href?: string | URLState | undefined;
@@ -24,7 +24,5 @@ export const URLProvider = ({ href, children }: URLProviderProps) => {
     return () => urlState.stop();
   }, [urlState]);
 
-  return (
-    <URLContext.Provider value={urlState}>{children}</URLContext.Provider>
-  );
+  return <URLContext.Provider value={urlState}>{children}</URLContext.Provider>;
 };

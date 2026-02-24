@@ -1,14 +1,14 @@
 import { QuasiURL } from "quasiurl";
 import { PortableState } from "./PortableState.ts";
-import { NavigationOptions } from "./types/NavigationOptions.ts";
+import type { NavigationOptions } from "./types/NavigationOptions.ts";
 
 const defaultNavigationOptions: NavigationOptions = {};
 
 export class URLState extends PortableState<string, NavigationOptions> {
   eventAliases = {
-    "navigationstart": "updatestart",
-    "navigation": "update",
-    "navigationend": "updateend",
+    navigationstart: "updatestart",
+    navigation: "update",
+    navigationend: "updateend",
   };
   constructor(href = "") {
     super(href);
@@ -52,7 +52,11 @@ export class URLState extends PortableState<string, NavigationOptions> {
 
     let url = new QuasiURL(href);
 
-    if (spa === "off" || !window.history || (url.origin !== "" && url.origin !== window.location.origin)) {
+    if (
+      spa === "off" ||
+      !window.history ||
+      (url.origin !== "" && url.origin !== window.location.origin)
+    ) {
       window.location[history === "replace" ? "replace" : "assign"](href);
       return false;
     }
