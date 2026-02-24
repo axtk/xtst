@@ -1,5 +1,5 @@
 {
-  "name": "@axcraft/state",
+  "name": "@axcraft/external-state",
   "version": "0.1.0",
   "description": "Data container allowing for subscription to its updates",
   "main": "./dist/index.cjs",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/axcraft/state.git"
+    "url": "git+https://github.com/axcraft/external-state.git"
   },
   "keywords": [
     "state",
@@ -24,17 +24,6 @@
   ],
   "author": "axtk",
   "license": "MIT",
-  "peerDependencies": {
-    "react": "^19.2.4"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    }
-  },
-  "devDependencies": {
-    "@types/react": "^19.2.14"
-  },
   "dependencies": {
     "quasiurl": "^1.1.12"
   }

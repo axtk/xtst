@@ -1,10 +1,10 @@
 import { QuasiURL } from "quasiurl";
-import { PortableState } from "./PortableState.ts";
+import { ExternalState } from "./ExternalState.ts";
 import type { NavigationOptions } from "./types/NavigationOptions.ts";
 
 const defaultNavigationOptions: NavigationOptions = {};
 
-export class URLState extends PortableState<string, NavigationOptions> {
+export class URLState extends ExternalState<string, NavigationOptions> {
   eventAliases = {
     navigationstart: "updatestart",
     navigation: "update",

@@ -6,7 +6,7 @@ export type StateUpdate<T> = (value: T) => T;
 /**
  * Data container allowing for subscription to its updates.
  */
-export class PortableState<Value, Payload extends EventPayload = EventPayload> {
+export class ExternalState<Value, Payload extends EventPayload = EventPayload> {
   _current: Value;
   _previous: Value;
   _callbacks: Record<string, Set<EventCallback<Payload>>> = {};

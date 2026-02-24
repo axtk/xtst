@@ -1,4 +1,4 @@
-import { isPortableState, PortableState } from "./index.ts";
+import { isExternalState, ExternalState } from "./index.ts";
 
 let testIndex = 0;
 
@@ -15,7 +15,7 @@ function assert(value: unknown, expectedValue: unknown) {
   }
 }
 
-let state = new PortableState(10);
+let state = new ExternalState(10);
 
 let testValue = [100, -3];
 let unsubscribe = [
@@ -27,8 +27,8 @@ let unsubscribe = [
   }),
 ];
 
-assert(isPortableState(state), true);
-assert(isPortableState({}), false);
+assert(isExternalState(state), true);
+assert(isExternalState({}), false);
 
 assert(state.current, 10);
 assert(state._callbacks.update.size, 2);

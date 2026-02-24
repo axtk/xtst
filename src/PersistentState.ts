@@ -2,7 +2,7 @@ import {
   getStorageEntry,
   type StorageEntryOptions,
 } from "./getStorageEntry.ts";
-import { PortableState } from "./PortableState.ts";
+import { ExternalState } from "./ExternalState.ts";
 import type { EventPayload } from "./types/EventPayload.ts";
 import type { PersistentStorage } from "./types/PersistentStorage.ts";
 
@@ -12,7 +12,7 @@ import type { PersistentStorage } from "./types/PersistentStorage.ts";
 export class PersistentState<
   T,
   P extends EventPayload = EventPayload,
-> extends PortableState<T, P> {
+> extends ExternalState<T, P> {
   _synced = false;
   /**
    * @param value - Initial state value.
