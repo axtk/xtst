@@ -27,7 +27,7 @@ export class URLState extends State<string, PayloadMap> {
     if (typeof window === "undefined") return;
 
     let handleURLChange = () => {
-      this.setValue(window.location.href);
+      this.setValue(window.location.href, { source: "popstate" });
     };
 
     let start = () => {
@@ -88,7 +88,11 @@ export class URLState extends State<string, PayloadMap> {
     }
   }
   _transition(options?: NavigationOptions) {
-    if (typeof window === "undefined" || options?.href === undefined) return;
+    if (
+      typeof window === "undefined" ||
+      options?.href === undefined ||
+      options?.source === "popstate"
+    ) return;
 
     let { href, target, spa, history } = options;
 
