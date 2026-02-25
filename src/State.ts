@@ -34,7 +34,7 @@ export class State<T, P extends EventPayloadMap<T> = EventPayloadMap<T>> {
    * `callback` is removed from the state and no longer called when
    * the state emits the corresponding event.
    */
-  on<E extends keyof P>(event: E, callback: EventCallback<P[E]>) {
+  on<E extends string>(event: E, callback: EventCallback<P[E]>) {
     (this._callbacks[event] ??= new Set()).add(callback);
 
     return () => this.off(event, callback);
@@ -43,7 +43,7 @@ export class State<T, P extends EventPayloadMap<T> = EventPayloadMap<T>> {
    * Adds a one-time event handler to the state: once the event is emitted,
    * the callback is called and removed from the state.
    */
-  once<E extends keyof P>(event: E, callback: EventCallback<P[E]>) {
+  once<E extends string>(event: E, callback: EventCallback<P[E]>) {
     let oneTimeCallback = (payload: P[E]) => {
       this.off(event, oneTimeCallback);
       callback(payload);
@@ -56,7 +56,7 @@ export class State<T, P extends EventPayloadMap<T> = EventPayloadMap<T>> {
    * and removes all handlers of the given event if `callback` is not
    * specified.
    */
-  off<E extends keyof P>(event: E, callback?: EventCallback<P[E]>) {
+  off<E extends string>(event: E, callback?: EventCallback<P[E]>) {
     if (callback === undefined) delete this._callbacks[event];
     else this._callbacks[event]?.delete(callback);
   }
@@ -65,7 +65,7 @@ export class State<T, P extends EventPayloadMap<T> = EventPayloadMap<T>> {
    * resolves as `false`, effectively interrupting the callback call chain.
    * Otherwise returns `true`.
    */
-  emit<E extends keyof P>(event: E, payload?: P[E]) {
+  emit<E extends string>(event: E, payload?: P[E]) {
     let callbacks = this._callbacks[event];
 
     if (this._active && callbacks?.size) {

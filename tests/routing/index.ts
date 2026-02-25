@@ -31,5 +31,3 @@ function renderMainContent() {
 
   document.body.removeAttribute("hidden");
 }
-
-route.emit("navigationcomplete");
