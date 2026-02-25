@@ -126,7 +126,7 @@ export class URLState extends State<string, PayloadMap> {
 
     if (href === undefined || (target && target !== "_self")) return;
 
-    let { hash } = new QuasiURL(String(href));
+    let { hash } = new QuasiURL(href);
 
     requestAnimationFrame(() => {
       let targetElement =
