@@ -19,7 +19,7 @@ test.describe("counter", () => {
 
   test.beforeAll(async () => {
     server = await serve({
-      path: "tests/counter",
+      path: "tests/persistent_counter",
       bundle: true,
       spa: true,
     });
@@ -33,6 +33,11 @@ test.describe("counter", () => {
     let p = new Playground(page);
 
     await page.goto("/");
+    await page.evaluate(() => {
+      window.localStorage.removeItem("sidestate-dev");
+    });
+    await page.reload();
+
     await expect(p.output).toHaveText("42");
     await p.plus.click();
     await p.plus.click();
@@ -43,11 +48,16 @@ test.describe("counter", () => {
     await p.plus.click();
     await expect(p.output).toHaveText("1");
   });
-
+  
   test("update and reload", async ({ page }) => {
     let p = new Playground(page);
 
     await page.goto("/");
+    await page.evaluate(() => {
+      window.localStorage.removeItem("sidestate-dev");
+    });
+    await page.reload();
+
     await expect(p.output).toHaveText("42");
     await p.plus.click();
     await p.plus.click();
@@ -55,15 +65,15 @@ test.describe("counter", () => {
     await expect(p.output).toHaveText("45");
 
     await page.reload();
-    await expect(p.output).toHaveText("42");
+    await expect(p.output).toHaveText("45");
     await p.plus.click();
-    await expect(p.output).toHaveText("43");
+    await expect(p.output).toHaveText("46");
     await p.reset.click();
     await expect(p.output).toHaveText("0");
 
     await page.reload();
-    await expect(p.output).toHaveText("42");
+    await expect(p.output).toHaveText("0");
     await p.plus.click();
-    await expect(p.output).toHaveText("43");
+    await expect(p.output).toHaveText("1");
   });
 });

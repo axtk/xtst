@@ -3,7 +3,7 @@ import type { PersistentStorage } from "./types/PersistentStorage.ts";
 
 function getStorage(session = false) {
   if (typeof window !== "undefined")
-    return session ? sessionStorage : localStorage;
+    return session ? window.sessionStorage : window.localStorage;
 }
 
 export type StorageEntryOptions<T> = {

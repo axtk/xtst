@@ -1,0 +1,14 @@
+html {
+  color: black;
+  background: white;
+}
+button {
+  min-width: 2em;
+  font: inherit;
+  cursor: pointer;
+}
+output {
+  display: inline-block;
+  min-width: 3em;
+  text-align: center;
+}
