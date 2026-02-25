@@ -4,6 +4,9 @@ import type { NavigationOptions } from "./types/NavigationOptions.ts";
 import { URLState } from "./URLState.ts";
 import { getNavigationOptions } from "./utils/getNavigationOptions.ts";
 import { isRouteEvent } from "./utils/isRouteEvent.ts";
+import { LocationPattern } from "./types/LocationPattern.ts";
+import { MatchHandler } from "./types/MatchHandler.ts";
+import { match } from "./utils/match.ts";
 
 export type ContainerElement = Document | Element | null | undefined;
 export type ElementCollection = (string | Node)[] | HTMLCollection | NodeList;
@@ -142,5 +145,56 @@ export class Route extends URLState {
   }
   toString() {
     return this.href;
+  }
+  /**
+   * Matches the current location against `urlPattern`.
+   */
+  match<P extends LocationPattern>(urlPattern: P) {
+    return match<P>(urlPattern, this.href);
+  }
+  /**
+   * Checks whether `urlPattern` matches the current URL and returns either
+   * based on `x` if there is a match, or based on `y` otherwise. (It
+   * loosely resembles the ternary conditional operator
+   * `matchesPattern ? x : y`.)
+   *
+   * If the current location matches `urlPattern`, `at(urlPattern, x, y)`
+   * returns:
+   * - `x`, if `x` is not a function;
+   * - `x({ params })`, if `x` is a function, with `params` extracted from
+   * the current URL.
+   *
+   * If the current location doesn't match `urlPattern`, `at(urlPattern, x, y)`
+   * returns:
+   * - `y`, if `y` is not a function;
+   * - `y({ params })`, if `y` is a function, with `params` extracted from
+   * the current URL.
+   */
+  at<P extends LocationPattern, X>(
+    urlPattern: P,
+    matchOutput: X | MatchHandler<P, X>,
+  ): X | undefined;
+
+  at<P extends LocationPattern, X, Y>(
+    urlPattern: P,
+    matchOutput: X | MatchHandler<P, X>,
+    mismatchOutput: Y | MatchHandler<P, Y>,
+  ): X | Y;
+
+  at<P extends LocationPattern, X, Y>(
+    urlPattern: P,
+    matchOutput: X | MatchHandler<P, X>,
+    mismatchOutput?: Y | MatchHandler<P, Y>,
+  ): X | Y | undefined {
+    let result = this.match<P>(urlPattern);
+
+    if (!result.ok)
+      return typeof mismatchOutput === "function"
+        ? (mismatchOutput as MatchHandler<P, Y>)(result)
+        : mismatchOutput;
+
+    return typeof matchOutput === "function"
+      ? (matchOutput as MatchHandler<P, X>)(result)
+      : matchOutput;
   }
 }

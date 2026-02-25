@@ -11,7 +11,8 @@
     "preversion": "npx npm-run-all shape test1 test2",
     "shape": "npx codeshape",
     "test1": "node tests/index.ts",
-    "test2": "npx playwright test --project=chromium"
+    "test2": "npx playwright test --project=chromium",
+    "typecheck": "npx codeshape --typecheck-only"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "auxsrv": "^0.2.3"
   },
   "dependencies": {
+    "@standard-schema/spec": "^1.1.0",
     "quasiurl": "^1.1.14"
   }
 }
