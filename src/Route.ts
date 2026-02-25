@@ -8,6 +8,13 @@ import { getNavigationOptions } from "./utils/getNavigationOptions.ts";
 export type ContainerElement = Document | Element | null | undefined;
 export type ElementCollection = (string | Node)[] | HTMLCollection | NodeList;
 
+export type ObservedElement =
+  | string
+  | Node
+  | (string | Node)[]
+  | HTMLCollection
+  | NodeList;
+
 let isElementCollection = (x: unknown): x is ElementCollection =>
   Array.isArray(x) || x instanceof NodeList || x instanceof HTMLCollection;
 
@@ -15,17 +22,32 @@ let isLinkElement = (x: unknown): x is LinkElement =>
   x instanceof HTMLAnchorElement || x instanceof HTMLAreaElement;
 
 export class Route extends URLState {
+  _clicks = new Set<(event: MouseEvent) => void>();
+  _init() {
+    super._init();
+
+    let handleClick = (event: MouseEvent) => {
+      for (let callback of this._clicks) callback(event);
+    };
+
+    let start = () => {
+      document.addEventListener("click", handleClick);
+    };
+
+    let stop = () => {
+      document.removeEventListener("click", handleClick);
+    };
+
+    this.on("start", start);
+    this.on("stop", stop);
+    start();
+  }
   navigate(options?: NavigationOptions) {
     if (options?.href) this.setValue(options.href, options);
   }
   observe(
     container: ContainerElement | (() => ContainerElement),
-    elements:
-      | string
-      | Node
-      | (string | Node)[]
-      | HTMLCollection
-      | NodeList = "a, area",
+    elements: ObservedElement = "a, area",
   ) {
     let handleClick = (event: MouseEvent) => {
       if (!this._active || event.defaultPrevented || !isRouteEvent(event)) return;
@@ -62,10 +84,10 @@ export class Route extends URLState {
       }
     };
   
-    document.addEventListener("click", handleClick);
+    this._clicks.add(handleClick);
   
     return () => {
-      document.removeEventListener("click", handleClick);
+      this._clicks.delete(handleClick);
     };
   }
   assign(url: string) {
