@@ -7,14 +7,10 @@ export class EventEmitter<
   _callbacks: EventCallbackMap<P> = {};
   _active = true;
   /**
-   * Adds an event handler to the state.
-   *
-   * Handlers of the `"update"` event are called whenever the state value
-   * is updated via `setValue(value)`.
+   * Adds an event handler.
    *
    * Returns an unsubscription function. Once it's invoked, the given
-   * `callback` is removed from the state and no longer called when
-   * the state emits the corresponding event.
+   * `callback` is removed and no longer called in response to the event.
    */
   on<E extends string>(event: E, callback: EventCallback<P[E]>) {
     (this._callbacks[event] ??= new Set()).add(callback);
@@ -22,8 +18,8 @@ export class EventEmitter<
     return () => this.off(event, callback);
   }
   /**
-   * Adds a one-time event handler to the state: once the event is emitted,
-   * the callback is called and removed from the state.
+   * Adds a one-time event handler: once the event is emitted, the callback
+   * is called and immediately removed.
    */
   once<E extends string>(event: E, callback: EventCallback<P[E]>) {
     let oneTimeCallback = (payload: P[E]) => {
@@ -34,7 +30,7 @@ export class EventEmitter<
     return this.on(event, oneTimeCallback);
   }
   /**
-   * Removes `callback` from the state's handlers of the given event,
+   * Removes the specified `callback` from the handlers of the given event,
    * and removes all handlers of the given event if `callback` is not
    * specified.
    */
@@ -44,7 +40,7 @@ export class EventEmitter<
   }
   /**
    * Emits the specified event. Returns `false` if at least one event callback
-   * resolves as `false`, effectively interrupting the callback call chain.
+   * returns `false`, effectively interrupting the callback call chain.
    * Otherwise returns `true`.
    */
   emit<E extends string>(event: E, payload?: P[E]) {
