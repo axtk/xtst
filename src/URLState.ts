@@ -67,7 +67,9 @@ export class URLState extends State<string, PayloadMap> {
       this._transition(extendedOptions) !== false
     ) {
       this._assignValue(href);
-      this.emit("navigationcomplete", extendedOptions);
+      
+      if (this.emit("navigationcomplete", extendedOptions))
+        this._complete(extendedOptions);
     }
   }
   _transition(options?: NavigationOptions) {
