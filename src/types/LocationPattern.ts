@@ -1,6 +1,6 @@
-import type { Config } from "./Config.ts";
+import type { URLConfig } from "./URLConfig.ts";
 import type { LocationValue } from "./LocationValue.ts";
 
-export type LocationPattern = Config["strict"] extends true
+export type LocationPattern = URLConfig["strict"] extends true
   ? LocationValue | LocationValue[]
   : LocationValue | RegExp | (LocationValue | RegExp)[];
