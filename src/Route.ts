@@ -42,9 +42,6 @@ export class Route extends URLState {
     this.on("stop", stop);
     start();
   }
-  navigate(options?: NavigationOptions) {
-    if (options?.href) this.setValue(options.href, options);
-  }
   observe(
     container: ContainerElement | (() => ContainerElement),
     elements: ObservedElement = "a, area",
@@ -90,6 +87,9 @@ export class Route extends URLState {
     return () => {
       this._clicks.delete(handleClick);
     };
+  }
+  navigate(options?: NavigationOptions) {
+    if (options?.href) this.setValue(options.href, options);
   }
   assign(url: string) {
     this.navigate({ href: url });
