@@ -1,7 +1,7 @@
-export type NavigationOptions = {
+export type NavigationOptions<Href = string> = {
   target?: string;
-  href?: string;
-  referrer?: string;
+  href?: Href;
+  referrer?: Href;
   spa?: "auto" | "off" | undefined;
   history?: "push" | "replace" | undefined;
   scroll?: "auto" | "off" | undefined;

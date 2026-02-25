@@ -7,6 +7,7 @@ import { isRouteEvent } from "./utils/isRouteEvent.ts";
 import { LocationPattern } from "./types/LocationPattern.ts";
 import { MatchHandler } from "./types/MatchHandler.ts";
 import { matchURL } from "./utils/matchURL.ts";
+import { LocationValue } from "./types/LocationValue.ts";
 
 export type ContainerElement = Document | Element | null | undefined;
 export type ElementCollection = (string | Node)[] | HTMLCollection | NodeList;
@@ -26,6 +27,9 @@ let isLinkElement = (x: unknown): x is LinkElement =>
 
 export class Route extends URLState {
   _clicks = new Set<(event: MouseEvent) => void>();
+  constructor(href: LocationValue = "") {
+    super(String(href));
+  }
   _init() {
     super._init();
 
@@ -91,13 +95,24 @@ export class Route extends URLState {
       this._clicks.delete(handleClick);
     };
   }
-  navigate(options?: NavigationOptions) {
-    if (options?.href) this.setValue(options.href, options);
+  navigate(options?: NavigationOptions<LocationValue>) {
+    if (!options?.href) return;
+  
+    let { href, referrer, ...params } = options;
+
+    // Stringify `LocationValue` URLs in `options`
+    let transformedOptions = {
+      href: String(href),
+      referrer: referrer && String(referrer),
+      ...params,
+    };
+
+    this.setValue(transformedOptions.href, transformedOptions);
   }
-  assign(url: string) {
+  assign(url: LocationValue) {
     this.navigate({ href: url });
   }
-  replace(url: string) {
+  replace(url: LocationValue) {
     this.navigate({ href: url, history: "replace" });
   }
   reload() {
@@ -113,18 +128,18 @@ export class Route extends URLState {
   forward() {
     this.go(1);
   }
-  get href() {
+  get href(): string {
     return this.getValue();
   }
-  set href(value: string) {
+  set href(value: LocationValue) {
     this.assign(value);
   }
   get pathname(): string {
     return new QuasiURL(this.href).pathname;
   }
-  set pathname(value: string) {
+  set pathname(value: LocationValue) {
     let url = new QuasiURL(this.href);
-    url.pathname = value;
+    url.pathname = String(value);
     this.assign(url.href);
   }
   get search(): string {
