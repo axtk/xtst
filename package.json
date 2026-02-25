@@ -25,12 +25,12 @@
   ],
   "author": "axtk",
   "license": "MIT",
-  "dependencies": {
-    "quasiurl": "^1.1.12"
-  },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.3.0",
     "auxsrv": "^0.2.3"
+  },
+  "dependencies": {
+    "quasiurl": "^1.1.14"
   }
 }
