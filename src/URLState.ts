@@ -1,5 +1,10 @@
 import { QuasiURL } from "quasiurl";
-import { EventCallback, type EventPayloadMap, State, type StateUpdate } from "./State.ts";
+import {
+  type EventCallback,
+  type EventPayloadMap,
+  State,
+  type StateUpdate,
+} from "./State.ts";
 import type { NavigationOptions } from "./types/NavigationOptions.ts";
 
 type PayloadMap = EventPayloadMap<string> & {
@@ -7,7 +12,9 @@ type PayloadMap = EventPayloadMap<string> & {
   navigationcomplete: NavigationOptions;
 };
 
-function isNavigationEvent(event: string): event is "navigationstart" | "navigationcomplete" {
+function isNavigationEvent(
+  event: string,
+): event is "navigationstart" | "navigationcomplete" {
   return event === "navigationstart" || event === "navigationcomplete";
 }
 
@@ -35,10 +42,18 @@ export class URLState extends State<string, PayloadMap> {
     this.on("stop", stop);
     start();
   }
-  on<E extends string>(event: E, callback: EventCallback<PayloadMap[E]>, invokeImmediately?: boolean) {
+  on<E extends string>(
+    event: E,
+    callback: EventCallback<PayloadMap[E]>,
+    invokeImmediately?: boolean,
+  ) {
     // The navigation event callbacks are invoked immediately by default as
     // soon as they are added to adjust to the current URL state.
-    if (this._active && isNavigationEvent(event) && invokeImmediately !== false) {
+    if (
+      this._active &&
+      isNavigationEvent(event) &&
+      invokeImmediately !== false
+    ) {
       let payload: NavigationOptions = {
         href: this.getValue(),
       };
@@ -67,7 +82,7 @@ export class URLState extends State<string, PayloadMap> {
       this._transition(extendedOptions) !== false
     ) {
       this._assignValue(href);
-      
+
       if (this.emit("navigationcomplete", extendedOptions))
         this._complete(extendedOptions);
     }
@@ -100,7 +115,8 @@ export class URLState extends State<string, PayloadMap> {
     );
   }
   _complete(options?: NavigationOptions) {
-    if (typeof window === "undefined" || !options || options.scroll === "off") return;
+    if (typeof window === "undefined" || !options || options.scroll === "off")
+      return;
 
     let { href, target } = options;
 

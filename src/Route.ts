@@ -1,9 +1,9 @@
 import { QuasiURL } from "quasiurl";
+import type { LinkElement } from "./types/LinkElement.ts";
 import type { NavigationOptions } from "./types/NavigationOptions.ts";
 import { URLState } from "./URLState.ts";
-import { isRouteEvent } from "./utils/isRouteEvent.ts";
-import { LinkElement } from "./types/LinkElement.ts";
 import { getNavigationOptions } from "./utils/getNavigationOptions.ts";
+import { isRouteEvent } from "./utils/isRouteEvent.ts";
 
 export type ContainerElement = Document | Element | null | undefined;
 export type ElementCollection = (string | Node)[] | HTMLCollection | NodeList;
@@ -50,42 +50,43 @@ export class Route extends URLState {
     elements: ObservedElement = "a, area",
   ) {
     let handleClick = (event: MouseEvent) => {
-      if (!this._active || event.defaultPrevented || !isRouteEvent(event)) return;
+      if (!this._active || event.defaultPrevented || !isRouteEvent(event))
+        return;
 
       let resolvedContainer =
         typeof container === "function" ? container() : container;
-  
+
       if (!resolvedContainer) return;
-  
+
       let element: HTMLAnchorElement | HTMLAreaElement | null = null;
       let targetElements = isElementCollection(elements)
         ? Array.from(elements)
         : [elements];
-  
+
       for (let targetElement of targetElements) {
         let target: Node | null = null;
-  
+
         if (typeof targetElement === "string")
           target =
             event.target instanceof HTMLElement
               ? event.target.closest(targetElement)
               : null;
         else target = targetElement;
-  
+
         if (isLinkElement(target) && resolvedContainer.contains(target)) {
           element = target;
           break;
         }
       }
-  
+
       if (element) {
         event.preventDefault();
         this.navigate(getNavigationOptions(element));
       }
     };
-  
+
     this._clicks.add(handleClick);
-  
+
     return () => {
       this._clicks.delete(handleClick);
     };

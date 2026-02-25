@@ -5,6 +5,6 @@ export * from "./src/State.ts";
 export * from "./src/types/LinkElement.ts";
 export * from "./src/types/NavigationOptions.ts";
 export * from "./src/types/PersistentStorage.ts";
+export * from "./src/URLState.ts";
 export * from "./src/utils/getNavigationOptions.ts";
 export * from "./src/utils/isRouteEvent.ts";
-export * from "./src/URLState.ts";

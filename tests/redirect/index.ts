@@ -26,7 +26,8 @@ function renderMainContent() {
   let matches = route.href.match(/^\/sections\/(?<id>\d+)\/?/);
   let isSection = matches !== null;
 
-  document.querySelector('[data-id="section"] h2 span')!.textContent = matches?.[1] ?? "";
+  document.querySelector('[data-id="section"] h2 span')!.textContent =
+    matches?.[1] ?? "";
 
   document
     .querySelector('main[data-id="intro"]')!
