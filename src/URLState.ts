@@ -1,11 +1,11 @@
 import { QuasiURL } from "quasiurl";
 import {
-  type EventCallback,
   type EventPayloadMap,
   State,
   type StateUpdate,
 } from "./State.ts";
 import type { NavigationOptions } from "./types/NavigationOptions.ts";
+import { EventCallback } from "./types/EventCallback.ts";
 
 type PayloadMap = EventPayloadMap<string> & {
   navigationstart: NavigationOptions;
