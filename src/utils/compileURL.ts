@@ -1,9 +1,12 @@
 import { QuasiURL } from "quasiurl";
-import { LocationValue } from "../types/LocationValue.ts";
-import { URLData } from "../types/URLData.ts";
+import type { LocationValue } from "../types/LocationValue.ts";
+import type { URLData } from "../types/URLData.ts";
 import { isLocationObject } from "./isLocationObject.ts";
 
-export function compileURL<T extends LocationValue>(urlPattern: T, data?: URLData<T>) {
+export function compileURL<T extends LocationValue>(
+  urlPattern: T,
+  data?: URLData<T>,
+) {
   if (isLocationObject(urlPattern)) return urlPattern.compile(data);
 
   let url = new QuasiURL(urlPattern ?? "");

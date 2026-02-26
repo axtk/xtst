@@ -4,12 +4,12 @@ import type { LocationPattern } from "./types/LocationPattern.ts";
 import type { LocationValue } from "./types/LocationValue.ts";
 import type { MatchHandler } from "./types/MatchHandler.ts";
 import type { NavigationOptions } from "./types/NavigationOptions.ts";
+import type { URLData } from "./types/URLData.ts";
 import { URLState } from "./URLState.ts";
+import { compileURL } from "./utils/compileURL.ts";
 import { getNavigationOptions } from "./utils/getNavigationOptions.ts";
 import { isRouteEvent } from "./utils/isRouteEvent.ts";
 import { matchURL } from "./utils/matchURL.ts";
-import { URLData } from "./types/URLData.ts";
-import { compileURL } from "./utils/compileURL.ts";
 
 export type ContainerElement = Document | Element | null | undefined;
 export type ElementCollection = (string | Node)[] | HTMLCollection | NodeList;
