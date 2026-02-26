@@ -97,7 +97,7 @@ export class Route extends URLState {
       this._clicks.delete(handleClick);
     };
   }
-  navigate(options?: NavigationOptions<LocationValue>) {
+  navigate(options?: NavigationOptions<LocationValue>): void {
     if (!options?.href) return;
 
     let { href, referrer, ...params } = options;

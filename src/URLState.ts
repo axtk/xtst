@@ -86,7 +86,7 @@ export class URLState extends State<string, PayloadMap> {
         this._complete(extendedOptions);
     }
   }
-  _transition(options?: NavigationOptions) {
+  _transition(options?: NavigationOptions): boolean | void | undefined {
     if (
       typeof window === "undefined" ||
       options?.href === undefined ||
@@ -118,7 +118,7 @@ export class URLState extends State<string, PayloadMap> {
       href,
     );
   }
-  _complete(options?: NavigationOptions) {
+  _complete(options?: NavigationOptions): boolean | void | undefined {
     if (typeof window === "undefined" || !options || options.scroll === "off")
       return;
 
