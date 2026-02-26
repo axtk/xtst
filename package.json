@@ -1,7 +1,7 @@
 {
   "name": "sidestate",
   "version": "0.1.5",
-  "description": "External state",
+  "description": "Vanilla TS/JS state management",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -20,9 +20,9 @@
   },
   "keywords": [
     "state",
-    "data container",
     "shared state",
-    "state management"
+    "state management",
+    "routing"
   ],
   "author": "axtk",
   "license": "MIT",
