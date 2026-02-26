@@ -1,6 +1,6 @@
 {
   "name": "sidestate",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Vanilla TS/JS state management",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
