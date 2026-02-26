@@ -8,6 +8,8 @@ import { URLState } from "./URLState.ts";
 import { getNavigationOptions } from "./utils/getNavigationOptions.ts";
 import { isRouteEvent } from "./utils/isRouteEvent.ts";
 import { matchURL } from "./utils/matchURL.ts";
+import { URLData } from "./types/URLData.ts";
+import { compileURL } from "./utils/compileURL.ts";
 
 export type ContainerElement = Document | Element | null | undefined;
 export type ElementCollection = (string | Node)[] | HTMLCollection | NodeList;
@@ -166,6 +168,13 @@ export class Route extends URLState {
    */
   match<P extends LocationPattern>(urlPattern: P) {
     return matchURL<P>(urlPattern, this.href);
+  }
+  /**
+   * Compiles `urlPattern` to a URL string by filling out the parameters
+   * based on `data`.
+   */
+  compile<T extends LocationValue>(urlPattern: T, data?: URLData<T>) {
+    return compileURL<T>(urlPattern, data);
   }
   /**
    * Checks whether `urlPattern` matches the current URL and returns either
