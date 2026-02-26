@@ -1,6 +1,6 @@
 {
   "name": "sidestate",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "External state",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
