@@ -39,7 +39,7 @@ export class URLState extends State<string, URLStatePayloadMap> {
     this.on("stop", stop);
     start();
   }
-  getImmediateInvocation<E extends keyof URLStatePayloadMap>(event: E) {
+  getImmediateInvocation<E extends keyof URLStatePayloadMap>(event: E): { ok: boolean; payload?: URLStatePayloadMap[E] } {
     if (isImmediatelyInvokedEvent(event)) {
       return {
         ok: true,
