@@ -8,8 +8,9 @@
   "type": "module",
   "scripts": {
     "demo": "npx auxsrv tests/routing --spa -b --watch",
-    "preversion": "npx npm-run-all shape test1 test2",
+    "preversion": "npx npm-run-all shape test",
     "shape": "npx codeshape",
+    "test": "npx npm-run-all test1 test2",
     "test1": "node tests/index.ts",
     "test2": "npx playwright test --project=chromium",
     "typecheck": "npx codeshape --typecheck-only"
