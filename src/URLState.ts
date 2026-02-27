@@ -45,7 +45,11 @@ export class URLState extends State<string, URLStatePayloadMap> {
     callback: EventCallback<URLStatePayloadMap[E]>,
     invokeImmediately?: boolean,
   ) {
-    if (this._active && isImmediatelyInvokedEvent(event) && invokeImmediately !== false)
+    if (
+      this._active &&
+      isImmediatelyInvokedEvent(event) &&
+      invokeImmediately !== false
+    )
       callback({ href: this.getValue() } as URLStatePayloadMap[typeof event]);
 
     return super.on(event, callback);
