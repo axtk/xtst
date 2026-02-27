@@ -1,5 +1,5 @@
 import { EventEmitter } from "./EventEmitter.ts";
-import { EventCallback } from "./types/EventCallback.ts";
+import type { EventCallback } from "./types/EventCallback.ts";
 
 export type StateUpdate<T> = (value: T) => T;
 
