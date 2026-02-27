@@ -1,4 +1,4 @@
-import { State, StatePayloadMap } from "./State.ts";
+import { State, type StatePayloadMap } from "./State.ts";
 import type { PersistentStorage } from "./types/PersistentStorage.ts";
 
 function getStorage(session = false) {

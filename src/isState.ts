@@ -1,4 +1,4 @@
-import type { StatePayloadMap, State } from "./State.ts";
+import type { State, StatePayloadMap } from "./State.ts";
 
 /**
  * Serves as a replacement to `instanceof ExternalState` which can lead to

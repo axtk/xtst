@@ -1,5 +1,5 @@
 import { QuasiURL } from "quasiurl";
-import { type StatePayloadMap, State, type StateUpdate } from "./State.ts";
+import { State, type StatePayloadMap, type StateUpdate } from "./State.ts";
 import type { NavigationOptions } from "./types/NavigationOptions.ts";
 
 export type URLStatePayloadMap = StatePayloadMap<string> & {
