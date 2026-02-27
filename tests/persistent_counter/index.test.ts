@@ -34,7 +34,7 @@ test.describe("counter", () => {
 
     await page.goto("/");
     await page.evaluate(() => {
-      window.localStorage.removeItem("sidestate-dev");
+      window.localStorage.removeItem("sidestate-dev-counter");
     });
     await page.reload();
 
@@ -54,7 +54,7 @@ test.describe("counter", () => {
 
     await page.goto("/");
     await page.evaluate(() => {
-      window.localStorage.removeItem("sidestate-dev");
+      window.localStorage.removeItem("sidestate-dev-counter");
     });
     await page.reload();
 
