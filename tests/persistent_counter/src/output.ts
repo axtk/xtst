@@ -4,6 +4,6 @@ let output = document.querySelector("output")!;
 
 output.textContent = String(counterState.getValue());
 
-counterState.on("update", ({ current }) => {
+counterState.on("set", ({ current }) => {
   output.textContent = String(current);
 });
