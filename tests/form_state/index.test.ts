@@ -17,7 +17,7 @@ test.describe("form state", () => {
 
   test.beforeAll(async () => {
     server = await serve({
-      path: "tests/form_state",
+      path: import.meta.url,
       bundle: true,
       spa: true,
     });

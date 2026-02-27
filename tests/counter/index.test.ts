@@ -19,7 +19,7 @@ test.describe("counter", () => {
 
   test.beforeAll(async () => {
     server = await serve({
-      path: "tests/counter",
+      path: import.meta.url,
       bundle: true,
       spa: true,
     });

@@ -26,7 +26,7 @@ let server: Server;
 
 test.beforeAll(async () => {
   server = await serve({
-    path: "tests/redirect",
+    path: import.meta.url,
     bundle: true,
     spa: true,
   });

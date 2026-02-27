@@ -30,7 +30,7 @@ test.describe("link scroll mode", () => {
 
   test.beforeAll(async () => {
     server = await serve({
-      path: "tests/link_scroll_mode",
+      path: import.meta.url,
       bundle: true,
       spa: true,
     });

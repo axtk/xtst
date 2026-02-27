@@ -33,7 +33,7 @@ test.describe("routing", () => {
 
   test.beforeAll(async () => {
     server = await serve({
-      path: "tests/routing",
+      path: import.meta.url,
       bundle: true,
       spa: true,
     });
