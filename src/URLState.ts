@@ -1,9 +1,9 @@
 import { QuasiURL } from "quasiurl";
-import { type EventPayloadMap, State, type StateUpdate } from "./State.ts";
+import { type StatePayloadMap, State, type StateUpdate } from "./State.ts";
 import type { EventCallback } from "./types/EventCallback.ts";
 import type { NavigationOptions } from "./types/NavigationOptions.ts";
 
-type PayloadMap = EventPayloadMap<string> & {
+export type URLStatePayloadMap = StatePayloadMap<string> & {
   navigationstart: NavigationOptions;
   // Similar to the "update" event, but with a `NavigationOptions` payload
   navigation: NavigationOptions;
@@ -16,7 +16,7 @@ function isImmediatelyInvoked(
   return event === "navigationstart" || event === "navigationcomplete";
 }
 
-export class URLState extends State<string, PayloadMap> {
+export class URLState extends State<string, URLStatePayloadMap> {
   constructor(href = "") {
     super(href);
     this._init();
@@ -40,9 +40,9 @@ export class URLState extends State<string, PayloadMap> {
     this.on("stop", stop);
     start();
   }
-  on<E extends string>(
+  on<E extends keyof URLStatePayloadMap>(
     event: E,
-    callback: EventCallback<PayloadMap[E]>,
+    callback: EventCallback<URLStatePayloadMap[E]>,
     invokeImmediately?: boolean,
   ) {
     // The navigation event callbacks are invoked immediately by default as
@@ -56,7 +56,7 @@ export class URLState extends State<string, PayloadMap> {
         href: this.getValue(),
       };
 
-      callback(payload as PayloadMap[typeof event]);
+      callback(payload as URLStatePayloadMap[typeof event]);
     }
 
     return super.on(event, callback);

@@ -7,8 +7,10 @@ export type StateUpdateOptions<T> = {
   current: T;
 };
 
-export type EventPayloadMap<T> = Record<string, void> & {
+export type StatePayloadMap<T> = Record<string, void> & {
   update: StateUpdateOptions<T>;
+  start: void;
+  stop: void;
 };
 
 /**
@@ -16,7 +18,7 @@ export type EventPayloadMap<T> = Record<string, void> & {
  */
 export class State<
   T,
-  P extends EventPayloadMap<T> = EventPayloadMap<T>,
+  P extends StatePayloadMap<T> = StatePayloadMap<T>,
 > extends EventEmitter<P> {
   _value: T;
   _revision = -1;

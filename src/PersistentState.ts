@@ -1,4 +1,4 @@
-import { type EventPayloadMap, State } from "./State.ts";
+import { State, StatePayloadMap } from "./State.ts";
 import type { PersistentStorage } from "./types/PersistentStorage.ts";
 
 function getStorage(session = false) {
@@ -39,12 +39,18 @@ export function getStorageEntry<T>({
   };
 }
 
+export type PersistentStatePayloadMap<T> = StatePayloadMap<T> & {
+  sync: void;
+  synconce: void;
+  effect: void;
+};
+
 /**
  * A container for data persistent across page reloads.
  */
 export class PersistentState<
   T,
-  P extends EventPayloadMap<T> = EventPayloadMap<T>,
+  P extends PersistentStatePayloadMap<T> = PersistentStatePayloadMap<T>,
 > extends State<T, P> {
   _synced = false;
   /**
