@@ -2,11 +2,13 @@ import { EventEmitter } from "./EventEmitter.ts";
 
 export type StateUpdate<T> = (value: T) => T;
 
+export type StateUpdateOptions<T> = {
+  previous: T;
+  current: T;
+};
+
 export type EventPayloadMap<T> = Record<string, void> & {
-  update: {
-    previous: T;
-    current: T;
-  };
+  update: StateUpdateOptions<T>;
 };
 
 /**
