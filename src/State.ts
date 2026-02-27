@@ -34,7 +34,7 @@ export class State<
     this._value = value;
   }
   on<E extends string>(event: E, callback: EventCallback<P[E]>) {
-    if (isImmediatelyInvokedEvent(event)) {
+    if (this._active && isImmediatelyInvokedEvent(event)) {
       let current = this.getValue();
 
       callback({ current, previous: current } as P[typeof event]);
