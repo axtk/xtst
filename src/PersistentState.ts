@@ -52,7 +52,7 @@ export class PersistentState<
   T,
   P extends PersistentStatePayloadMap<T> = PersistentStatePayloadMap<T>,
 > extends State<T, P> {
-  _synced = false;
+  _active = false;
   /**
    * @param value - Initial state value.
    * @param options - Either of the following:
@@ -80,16 +80,10 @@ export class PersistentState<
     };
 
     let sync = () => {
-      if (!this._synced) this._synced = true;
-
       let value = read();
 
       if (value instanceof Promise) value.then(update);
       else update(value);
-    };
-
-    let syncOnce = () => {
-      if (!this._synced) sync();
     };
 
     if (write) {
@@ -99,7 +93,6 @@ export class PersistentState<
     }
 
     this.on("sync", sync);
-    this.once("synconce", syncOnce);
-    this.once("effect", syncOnce);
+    this.on("start", sync);
   }
 }

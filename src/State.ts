@@ -29,16 +29,27 @@ export class State<
 > extends EventEmitter<P> {
   _value: T;
   _revision = -1;
+  // For immediately invoked event callbacks added during inactivity
+  _queue: (() => void)[] = [];
   constructor(value: T) {
     super();
     this._value = value;
+
+    this.on("effect", () => {
+      this.start();
+    });
+  }
+  _call(callback: () => void) {
+    if (this._active) callback();
+    else this._queue.push(callback);
   }
   on<E extends string>(event: E, callback: EventCallback<P[E]>) {
-    if (this._active && isImmediatelyInvokedEvent(event)) {
-      let current = this.getValue();
+    if (isImmediatelyInvokedEvent(event))
+      this._call(() => {
+        let current = this.getValue();
 
-      callback({ current, previous: current } as P[typeof event]);
-    }
+        callback({ current, previous: current } as P[typeof event]);
+      });
 
     return super.on(event, callback);
   }
@@ -72,5 +83,11 @@ export class State<
   }
   get revision() {
     return this._revision;
+  }
+  start() {
+    super.start();
+
+    for (let callback of this._queue) callback();
+    this._queue = [];
   }
 }

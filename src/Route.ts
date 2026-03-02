@@ -49,7 +49,6 @@ export class Route extends URLState {
 
     this.on("start", start);
     this.on("stop", stop);
-    start();
   }
   observe(
     container: ContainerElement | (() => ContainerElement),

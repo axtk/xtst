@@ -8,6 +8,7 @@ route.on("navigationcomplete", () => {
 });
 
 route.observe(document);
+route.start();
 
 function render() {
   document

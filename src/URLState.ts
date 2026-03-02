@@ -17,6 +17,7 @@ function isImmediatelyInvokedEvent(
 }
 
 export class URLState extends State<string, URLStatePayloadMap> {
+  _active = false;
   constructor(href = "") {
     super(href);
     this._init();
@@ -38,19 +39,16 @@ export class URLState extends State<string, URLStatePayloadMap> {
 
     this.on("start", start);
     this.on("stop", stop);
-    start();
   }
   on<E extends string>(
     event: E,
     callback: EventCallback<URLStatePayloadMap[E]>,
     invokeImmediately?: boolean,
   ) {
-    if (
-      this._active &&
-      isImmediatelyInvokedEvent(event) &&
-      invokeImmediately !== false
-    )
-      callback({ href: this.getValue() } as URLStatePayloadMap[typeof event]);
+    if (isImmediatelyInvokedEvent(event) && invokeImmediately !== false)
+      this._call(() => {
+        callback({ href: this.getValue() } as URLStatePayloadMap[typeof event]);
+      });
 
     return super.on(event, callback);
   }
