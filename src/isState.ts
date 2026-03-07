@@ -1,8 +1,8 @@
 import type { State, StatePayloadMap } from "./State.ts";
 
 /**
- * Serves as a replacement to `instanceof ExternalState` which can lead to
- * a false negative when `ExternalState` comes from transitive dependencies.
+ * Serves as an alternative to `instanceof State` which can lead to a false
+ * negative when `State` comes from a transitive dependency.
  */
 export function isState<T, P extends StatePayloadMap<T> = StatePayloadMap<T>>(
   x: unknown,
